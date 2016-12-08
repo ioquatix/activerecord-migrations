@@ -22,7 +22,7 @@ task :environment do
 	DATABASE_ENV = :development
 	
 	ActiveRecord::Base.configurations = {
-		# This must be a string or it will not be matched by ActiveRecord:
+		# This key must be a string or it will not be matched by ActiveRecord:
 		'development' => {
 			'adapter' => 'sqlite3',
 			# This key must be a string or rake tasks will fail (e.g. each_current_configuration fails):
@@ -36,7 +36,7 @@ task :environment do
 	end
 end
 
-require 'activerecord/migrations'
+require 'active_record/migrations'
 ActiveRecord::Migrations.root = File.expand_path("../db", __dir__)
 ```
 
