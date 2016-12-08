@@ -1,0 +1,22 @@
+
+task :environment do
+	# This must be a symbol... or establish_connection thinks it's a URL.
+	DATABASE_ENV = :development
+	
+	ActiveRecord::Base.configurations = {
+		# This must be a string or it will not be recognized:
+		'development' => {
+			'adapter' => 'sqlite3',
+			# This key must be a string or rake tasks will fail (e.g. each_current_configuration fails):
+			'database' => 'db/development.db'
+		}
+	}
+	
+	# Connect to database:
+	unless ActiveRecord::Base.connected?
+		ActiveRecord::Base.establish_connection(DATABASE_ENV)
+	end
+end
+
+require 'activerecord/migrations/tasks'
+ActiveRecord::Migrations.root = __dir__
