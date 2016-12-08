@@ -18,5 +18,5 @@ task :environment do
 	end
 end
 
-require 'activerecord/migrations/tasks'
+require 'active_record/migrations/tasks'
 ActiveRecord::Migrations.root = __dir__

@@ -14,9 +14,28 @@ gem 'activerecord-migrations'
 
 ## Usage
 
-Add this to `tasks/db.rake`
+Add something like this to `tasks/db.rake`
 
 ```ruby
+task :environment do
+	# This must be a symbol... or establish_connection thinks it's a URL.
+	DATABASE_ENV = :development
+	
+	ActiveRecord::Base.configurations = {
+		# This must be a string or it will not be matched by ActiveRecord:
+		'development' => {
+			'adapter' => 'sqlite3',
+			# This key must be a string or rake tasks will fail (e.g. each_current_configuration fails):
+			'database' => 'db/development.db'
+		}
+	}
+	
+	# Connect to database:
+	unless ActiveRecord::Base.connected?
+		ActiveRecord::Base.establish_connection(DATABASE_ENV)
+	end
+end
+
 require 'activerecord/migrations'
 ActiveRecord::Migrations.root = File.expand_path("../db", __dir__)
 ```
