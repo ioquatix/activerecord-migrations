@@ -38,6 +38,10 @@ require 'active_record/migrations'
 ActiveRecord::Migrations.root = File.expand_path("../db", __dir__)
 ```
 
+### Deployment
+
+This gem includes an additional task `db:deploy` which is designed to assist with deployment of sites with databases. When deploying a site for the first time, this task will create the database and load the seed data. If deploying the site to an existing database it will simply run migrations.
+
 ## Contributing
 
 1. Fork it
