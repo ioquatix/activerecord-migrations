@@ -1,8 +1,6 @@
 # ActiveRecord::Migrations
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/activerecord/migrations`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem provides opinionated support for ActiveRecord migrations in non-Rails applications. It's faster and better defined than the competing gems, but only supports ActiveRecord 5+.
 
 ## Installation
 
