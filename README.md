@@ -1,6 +1,10 @@
 # ActiveRecord::Migrations
 
-This gem provides opinionated support for ActiveRecord migrations in non-Rails applications. It's faster and better defined than the competing gems, but only supports ActiveRecord 5+.
+This gem provides opinionated support for ActiveRecord migrations in non-Rails applications. It's more opinionated than [active_record_migrations](https://github.com/rosenfeld/active_record_migrations) and [standalone-migrations](https://github.com/thuss/standalone-migrations), and therefore simpler to configure.
+
+[![Build Status](https://secure.travis-ci.org/ioquatix/activerecord-migrations.svg)](http://travis-ci.org/ioquatix/activerecord-migrations)
+[![Code Climate](https://codeclimate.com/github/ioquatix/activerecord-migrations.svg)](https://codeclimate.com/github/ioquatix/activerecord-migrations)
+[![Coverage Status](https://coveralls.io/repos/ioquatix/activerecord-migrations/badge.svg)](https://coveralls.io/r/ioquatix/activerecord-migrations)
 
 ## Installation
 
@@ -13,6 +17,14 @@ gem 'activerecord-migrations'
 ## Usage
 
 Add something like this to `tasks/db.rake`
+
+```ruby
+require 'active_record/migrations/tasks'
+# The root must be the root of your application, and contain `db/`.
+ActiveRecord::Migrations.root = File.dirname(__dir__)
+```
+
+Somewhere else, ensure you have a suitable `environment` task, e.g:
 
 ```ruby
 task :environment do
@@ -33,10 +45,6 @@ task :environment do
 		ActiveRecord::Base.establish_connection(DATABASE_ENV)
 	end
 end
-
-require 'active_record/migrations/tasks'
-# The root must be the root of your application, and contain `db/`.
-ActiveRecord::Migrations.root = File.dirname(__dir__)
 ```
 
 ### Deployment
@@ -50,6 +58,10 @@ This gem includes an additional task `db:deploy` which is designed to assist wit
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## See Also
+
+- [ActiveRecord::Rack](https://github.com/ioquatix/activerecord-rack)
 
 ## License
 
