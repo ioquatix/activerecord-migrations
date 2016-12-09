@@ -35,7 +35,8 @@ task :environment do
 end
 
 require 'active_record/migrations/tasks'
-ActiveRecord::Migrations.root = File.expand_path("../db", __dir__)
+# The root must be the root of your application, and contain `db/`.
+ActiveRecord::Migrations.root = File.dirname(__dir__)
 ```
 
 ### Deployment
