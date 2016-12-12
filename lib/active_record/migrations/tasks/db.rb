@@ -39,6 +39,7 @@ namespace :db do
 		database_tasks.env = DATABASE_ENV.to_s
 		database_tasks.database_configuration = ActiveRecord::Base.configurations
 		database_tasks.migrations_paths = File.join(root, 'db/migrate')
+		database_tasks.fixtures_path = File.join(root, 'db/fixtures', DATABASE_ENV.to_s)
 		
 		database_tasks.send(:define_method, :load_seed) do
 			load File.join(root, 'db/seed.rb')
