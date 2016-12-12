@@ -55,11 +55,11 @@ namespace :db do
 			abort "Missing #{schema_path}, cannot deploy!"
 		end
 		
-		if ActiveRecord::Migrations.database?
-			Rake::Task['db:migrate'].invoke
-		else
+		unless ActiveRecord::Migrations.database?
 			Rake::Task['db:setup'].invoke
 		end
+		
+		Rake::Task['db:migrate'].invoke
 	end
 	
 	task :connection_config => :environment do
@@ -67,7 +67,36 @@ namespace :db do
 		
 		pp ActiveRecord::Base.connection_config
 	end
+	
+	task :connection_config => :environment do
+		require 'pp'
+		
+		puts "Connection Configuration:"
+		pp ActiveRecord::Base.connection_config
+	end
+
+	desc 'Print out connection configuration and available tables/data sources.'
+	task :info => :connection_config do
+		puts "Available Data Sources:"
+		if ActiveRecord::Migrations.database?
+			ActiveRecord::Base.connection.data_sources.each do |data_source|
+				puts "\t#{data_source}"
+			end
+		else
+			puts "\tDatabase does not exist."
+		end
+	end
 end
 
 # Loading this AFTER we define our own load_config task is critical, we need to make sure things are set up correctly before we run the task of the same name from ActiveRecord.
 load 'active_record/railties/databases.rake'
+
+# Now we work around some existing broken tasks:
+Rake::Task['db:seed'].clear
+
+namespace :db do
+	desc 'Load the seed data into the database.'
+	task :seed do
+		ActiveRecord::Tasks::DatabaseTasks.load_seed
+	end
+end
