@@ -33,4 +33,19 @@ module ActiveRecord
 			false
 		end
 	end
+	
+	if defined? Tasks::DatabaseTasks
+		module Tasks
+			module DatabaseTasks
+				def each_current_configuration(environment)
+					unless configuration = ActiveRecord::Base.configurations[environment]
+						raise ArgumentError.new("Cannot find configuration for environment #{environment}")
+					end
+					
+					# This is a hack because DatabaseTasks functionality uses string for keys.
+					yield configuration.stringify_keys
+				end
+			end
+		end
+	end
 end
