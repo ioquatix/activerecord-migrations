@@ -34,9 +34,9 @@ task :environment do
 	ActiveRecord::Base.configurations = {
 		# This key must be a string or it will not be matched by ActiveRecord:
 		'development' => {
-			'adapter' => 'sqlite3',
-			# This key must be a string or rake tasks will fail (e.g. each_current_configuration fails):
-			'database' => 'db/development.db'
+			# Using symbols for keys is fixed by this gem.
+			adapter: => 'sqlite3',
+			database: => 'db/development.db'
 		}
 	}
 	
