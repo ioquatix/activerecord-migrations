@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
 	spec.add_dependency "activerecord", "~> 5.0"
 	spec.add_dependency "railties", "~> 5.0"
 
+	spec.add_dependency "rainbow", "~> 2.0"
+
 	spec.add_development_dependency "bundler", "~> 1.13"
 	spec.add_development_dependency "rake", "~> 10.0"
 	spec.add_development_dependency "rspec", "~> 3.0"

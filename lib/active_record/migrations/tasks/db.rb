@@ -63,21 +63,24 @@ namespace :db do
 	end
 	
 	task :connection_config => :environment do
-		require 'pp'
+		require 'rainbow'
 		
-		puts "Connection Configuration:"
-		pp ActiveRecord::Base.connection_config
+		puts "#{Rainbow("Connection Config:").bright} DATABASE_ENV=#{Rainbow(DATABASE_ENV).green}"
+		ActiveRecord::Base.connection_config.each do |key,value|
+			key = Rainbow("#{key}:".rjust(30)).yellow
+			puts "\t#{key} #{value.inspect}"
+		end
 	end
 
 	desc 'Print out connection configuration and available tables/data sources.'
 	task :info => :connection_config do
-		puts "Available Data Sources:"
+		puts Rainbow("Data Sources:").bright
 		if ActiveRecord::Migrations.database?
 			ActiveRecord::Base.connection.data_sources.each do |data_source|
 				puts "\t#{data_source}"
 			end
 		else
-			puts "\tDatabase does not exist."
+			puts Rainbow("\tDatabase does not exist!").red
 		end
 	end
 end
