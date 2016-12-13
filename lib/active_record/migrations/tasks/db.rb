@@ -65,12 +65,6 @@ namespace :db do
 	task :connection_config => :environment do
 		require 'pp'
 		
-		pp ActiveRecord::Base.connection_config
-	end
-	
-	task :connection_config => :environment do
-		require 'pp'
-		
 		puts "Connection Configuration:"
 		pp ActiveRecord::Base.connection_config
 	end
