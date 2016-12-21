@@ -23,6 +23,6 @@ Rake::Task['db:seed'].clear
 
 namespace :db do
 	desc 'Load the seed data into the database.'
-	task :seed => ['db:fixtures:load'] do
+	task :seed => 'db:fixtures:load' do
 	end
 end
