@@ -51,7 +51,7 @@ end
 
 This gem includes an additional task `db:deploy` which is designed to assist with deployment of sites with databases. When deploying a site for the first time, this task will create the database and load the seed data, then run any outstanding migrations. If deploying the site to an existing database it will simply run migrations.
 
-The typical usage is to run `db:fixtures:update` which will generate all the required files into `db/fixtures/$DATABASE/`, which includes the contents of all tables, the current `schema.rb`.
+The typical usage is to run `db:fixtures:update` which will generate all the required files into `db/fixtures/$DATABASE/`, which includes the contents of all tables and the current `schema.rb`.
 
 ### Fixtures
 
