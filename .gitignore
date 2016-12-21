@@ -7,3 +7,7 @@
 /pkg/
 /spec/reports/
 /tmp/
+
+spec/active_record/project/db/development.db
+spec/active_record/project/db/schema.rb
+
