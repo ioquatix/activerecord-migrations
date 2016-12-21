@@ -35,7 +35,8 @@ namespace :db do
 			require "rails/generators"
 			
 			parameters = [name] + options
-			Rails::Generators.invoke "active_record:migration", parameters, :destination_root => ActiveRecord::Migrations.root
+			
+			files = Rails::Generators.invoke "active_record:migration", parameters, :destination_root => ActiveRecord::Migrations.root
 		end
 	end
 end

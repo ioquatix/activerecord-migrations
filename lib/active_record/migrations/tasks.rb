@@ -19,8 +19,6 @@
 # THE SOFTWARE.
 
 require_relative 'tasks/db'
-require_relative 'tasks/db/migrations'
-require_relative 'tasks/db/fixtures'
 
 module ActiveRecord
 	module Migrations

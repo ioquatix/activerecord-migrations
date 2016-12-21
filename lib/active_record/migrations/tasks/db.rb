@@ -38,7 +38,7 @@ namespace :db do
 		database_tasks.db_dir = File.join(root, 'db')
 		database_tasks.env = DATABASE_ENV.to_s
 		database_tasks.database_configuration = ActiveRecord::Base.configurations
-		database_tasks.migrations_paths = File.join(root, 'db/migrate')
+		database_tasks.migrations_paths = [File.join(root, 'db/migrate')]
 		database_tasks.fixtures_path = File.join(root, 'db/fixtures', DATABASE_ENV.to_s)
 		
 		database_tasks.send(:define_method, :load_seed) do
@@ -46,17 +46,32 @@ namespace :db do
 		end
 	end
 	
-	task 'Setup a new database if required and run migrations.'
-	task :deploy => :load_config do
+	task :schema_path => :load_config do
 		database_tasks = ActiveRecord::Tasks::DatabaseTasks
 		
-		schema_path = File.join(database_tasks.db_dir, 'schema.rb')
-		unless File.exist? schema_path
-			abort "Missing #{schema_path}, cannot deploy!"
+		paths = [
+			ENV['SCHEMA'],
+			File.join(database_tasks.fixtures_path, 'schema.rb'),
+			File.join(database_tasks.db_dir, 'schema.rb'),
+		].compact
+		
+		unless @schema_path = paths.select{|path| File.exist?(path)}.first
+			abort "Could not locate schema file: #{paths.inspect}!"
 		end
 		
+		puts "Schema path: #{@schema_path}"
+	end
+	
+	desc 'Setup a new database if required and run migrations.'
+	task :deploy => [:load_config, :schema_path] do
+		database_tasks = ActiveRecord::Tasks::DatabaseTasks
+		
 		unless ActiveRecord::Migrations.database?
-			Rake::Task['db:setup'].invoke
+			Rake::Task['db:create'].invoke
+			
+			ActiveRecord::Tasks::DatabaseTasks.load_schema_current(:ruby, @schema_path)
+			
+			Rake::Task['db:seed'].invoke
 		end
 		
 		Rake::Task['db:migrate'].invoke
@@ -88,12 +103,7 @@ end
 # Loading this AFTER we define our own load_config task is critical, we need to make sure things are set up correctly before we run the task of the same name from ActiveRecord.
 load 'active_record/railties/databases.rake'
 
-# Now we work around some existing broken tasks:
-Rake::Task['db:seed'].clear
-
-namespace :db do
-	desc 'Load the seed data into the database.'
-	task :seed do
-		ActiveRecord::Tasks::DatabaseTasks.load_seed
-	end
-end
+# We load these afterwards as it augments/replace the existing tasks:
+require_relative 'db/seed'
+require_relative 'db/fixtures'
+require_relative 'db/migrations'

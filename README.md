@@ -49,22 +49,17 @@ end
 
 ### Deployment
 
-This gem includes an additional task `db:deploy` which is designed to assist with deployment of sites with databases. When deploying a site for the first time, this task will create the database and load the seed data. If deploying the site to an existing database it will simply run migrations.
+This gem includes an additional task `db:deploy` which is designed to assist with deployment of sites with databases. When deploying a site for the first time, this task will create the database and load the seed data, then run any outstanding migrations. If deploying the site to an existing database it will simply run migrations.
 
-### `db/seed.rb`
-
-This file should contain the logic for loading your fixtures or other seed data. Something like this:
-
-```ruby
-require_relative 'environment'
-
-puts "Loading fixtures..."
-system("rake", "db:fixtures:load")
-```
+The typical usage is to run `db:fixtures:update` which will generate all the required files into `db/fixtures/$DATABASE/`, which includes the contents of all tables, the current `schema.rb`.
 
 ### Fixtures
 
-Fixtures are generated into `db/fixtures/#{environment}/table.yml` by running `rake db:fixtures:dump`.
+Fixtures are generated into `db/fixtures/$DATABASE_ENV/$TABLE_NAME.yml` by running `rake db:fixtures:dump`. You can limit this to specific tables by editing `db/fixtures/$DATABASE_ENV/tables.conf` which is loaded if present, or by specifying `TABLES=table1,table2` environment variable.
+
+### Seed
+
+This gem replaces the existing data seed mechanism with `db:fixtures:load`.
 
 ## Contributing
 
