@@ -59,7 +59,7 @@ namespace :db do
 			abort "Could not locate schema file: #{paths.inspect}!"
 		end
 		
-		puts "Schema path: #{@schema_path}"
+		puts "Found schema: #{@schema_path}"
 	end
 	
 	desc 'Setup a new database if required and run migrations.'
