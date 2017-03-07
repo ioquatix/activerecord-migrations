@@ -24,6 +24,10 @@ module ActiveRecord
 	module Migrations
 		class << self
 			attr_accessor :root
+			
+			def migrations_root
+				File.join(self.root, 'db/migrate')
+			end
 		end
 		
 		def self.database?

@@ -32,10 +32,10 @@ namespace :db do
 				options = []
 			end
 			
-			require "rails/generators"
+			require_relative 'generators'
 			
 			parameters = [name] + options
-			
+
 			files = Rails::Generators.invoke "active_record:migration", parameters, :destination_root => ActiveRecord::Migrations.root
 		end
 	end
