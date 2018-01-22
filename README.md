@@ -35,8 +35,8 @@ task :environment do
 		# This key must be a string or it will not be matched by ActiveRecord:
 		'development' => {
 			# Using symbols for keys is fixed by this gem.
-			adapter: => 'sqlite3',
-			database: => 'db/development.db'
+			adapter: 'sqlite3',
+			database: 'db/development.db'
 		}
 	}
 	
