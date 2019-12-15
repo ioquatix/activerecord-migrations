@@ -50,7 +50,7 @@ describe ActiveRecord::Migrations do
 			system("rake", "db:deploy")
 			
 			expect(File).to be_exist("db/schema.rb")
-			expect(File.read('db/schema.rb')).to include("version: 20161208121932")
+			expect(File.read('db/schema.rb')).to include("version: 2016_12_08_121932")
 		end
 	end
 end
