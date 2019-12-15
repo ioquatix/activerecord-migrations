@@ -2,7 +2,7 @@
 
 This gem provides opinionated support for ActiveRecord migrations in non-Rails applications. It's more opinionated than [active_record_migrations](https://github.com/rosenfeld/active_record_migrations) and [standalone-migrations](https://github.com/thuss/standalone-migrations), and therefore simpler to configure.
 
-[![Build Status](https://secure.travis-ci.org/ioquatix/activerecord-migrations.svg)](http://travis-ci.org/ioquatix/activerecord-migrations)
+[![Build Status](https://travis-ci.com/ioquatix/activerecord-migrations.svg)](https://travis-ci.com/ioquatix/activerecord-migrations)
 [![Code Climate](https://codeclimate.com/github/ioquatix/activerecord-migrations.svg)](https://codeclimate.com/github/ioquatix/activerecord-migrations)
 [![Coverage Status](https://coveralls.io/repos/ioquatix/activerecord-migrations/badge.svg)](https://coveralls.io/r/ioquatix/activerecord-migrations)
 
