@@ -23,7 +23,7 @@
 require 'active_record/migrations'
 require 'fileutils'
 
-describe ActiveRecord::Migrations do
+RSpec.describe ActiveRecord::Migrations do
 	let(:project_root) {File.expand_path("project", __dir__)}
 	
 	before(:each) do

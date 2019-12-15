@@ -1,12 +1,16 @@
 /.bundle/
 /.yardoc
-/Gemfile.lock
 /_yardoc/
 /coverage/
 /doc/
 /pkg/
 /spec/reports/
 /tmp/
+
+# rspec failure tracking
+.rspec_status
+Gemfile.lock
+.covered.db
 
 spec/active_record/project/db/development.db
 spec/active_record/project/db/schema.rb
