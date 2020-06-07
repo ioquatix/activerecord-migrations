@@ -18,6 +18,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+require 'rake'
+require 'variant'
+
+task :environment do
+	# Can be overriden by user.
+end
+
 namespace :db do
 	task :load_config => :environment do
 		database_tasks = ActiveRecord::Tasks::DatabaseTasks
@@ -26,9 +33,8 @@ namespace :db do
 			abort "ActiveRecord::Migrations.root needs to be set!"
 		end
 		
-		unless DATABASE_ENV
-			abort "DATABASE_ENV needs to be set!"
-		end
+		# DATABASE_ENV is a legacy environment variable:
+		variant = Variant.for(:database) || DATABASE_ENV
 		
 		if ActiveRecord::Base.configurations.empty?
 			abort "ActiveRecord::Base.configurations needs to be setup!"
@@ -36,10 +42,10 @@ namespace :db do
 		
 		database_tasks.root = root
 		database_tasks.db_dir = File.join(root, 'db')
-		database_tasks.env = DATABASE_ENV.to_s
+		database_tasks.env = variant.to_s
 		database_tasks.database_configuration = ActiveRecord::Base.configurations
 		database_tasks.migrations_paths = [File.join(root, 'db/migrate')]
-		database_tasks.fixtures_path = File.join(root, 'db/fixtures', DATABASE_ENV.to_s)
+		database_tasks.fixtures_path = File.join(root, 'db/fixtures', variant.to_s)
 		
 		database_tasks.send(:define_method, :load_seed) do
 			load File.join(root, 'db/seed.rb')

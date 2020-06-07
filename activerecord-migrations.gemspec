@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
 	spec.add_dependency "activerecord", [">= 5", "< 7"]
 	spec.add_dependency "railties"
 	spec.add_dependency "rainbow", "~> 2.0"
+	spec.add_dependency "variant"
 	
 	spec.add_development_dependency "bake-bundler"
 	spec.add_development_dependency "bake-modernize"
