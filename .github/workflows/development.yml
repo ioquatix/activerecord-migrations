@@ -34,15 +34,19 @@ jobs:
             ruby: head
             experimental: true
     
-    services:
-      mysql:
-        image: mysql:5.7
-    
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{matrix.ruby}}
+    
+    - name: Installing packages (ubuntu)
+      if: matrix.os == 'ubuntu'
+      run: sudo apt-get install sqlite3 libsqlite3-dev
+    
+    - name: Installing packages (macos)
+      if: matrix.os == 'macos'
+      run: brew install sqlite3
     
     - name: Install dependencies
       run: ${{matrix.env}} bundle install
