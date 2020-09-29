@@ -42,7 +42,7 @@ module ActiveRecord
 			module DatabaseTasks
 				def each_current_configuration(environment, spec_name = nil)
 					unless configuration = ActiveRecord::Base.configurations[environment]
-						raise ArgumentError.new("Cannot find configuration for environment #{environment.inspect} in #{ActiveRecord::Base.configurations.keys}")
+						raise ArgumentError.new("Cannot find configuration for environment #{environment.inspect} in #{ActiveRecord::Base.configurations.to_h.keys}")
 					end
 					
 					# This is a hack because DatabaseTasks functionality uses string for keys.
