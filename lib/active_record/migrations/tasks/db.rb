@@ -70,8 +70,6 @@ namespace :db do
 	
 	desc 'Setup a new database if required and run migrations.'
 	task :deploy => [:load_config, :schema_path] do
-		database_tasks = ActiveRecord::Tasks::DatabaseTasks
-		
 		unless ActiveRecord::Migrations.database?
 			Rake::Task['db:create'].invoke
 			
