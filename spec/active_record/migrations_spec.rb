@@ -53,4 +53,14 @@ RSpec.describe ActiveRecord::Migrations do
 			expect(File.read('db/schema.rb')).to include("version: 2016_12_08_121932")
 		end
 	end
+	
+	it "should handle non-existent configuration" do
+		require 'active_record/migrations/tasks'
+		ActiveRecord::Base.configurations = {
+			"development" => "null://test",
+		}
+		expect do
+			ActiveRecord::Tasks::DatabaseTasks.send(:each_current_configuration, "foo")
+		end.to raise_error(ArgumentError, 'Cannot find configuration for environment "foo" in ["development"]')
+	end
 end
